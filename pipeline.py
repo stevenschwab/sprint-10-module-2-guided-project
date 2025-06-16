@@ -1,3 +1,5 @@
+'''Data Pipeline for moving sqlite db to postgres hosted db'''
+
 import psycopg2
 from dotenv import load_dotenv
 import os
@@ -28,4 +30,21 @@ sl_curs = sl_conn.cursor()
 
 def execute_query(curs, query=select_all):
     result = curs.execute(query)
-    return result.fetchall()
+    return result
+
+def populate_pg_character_table(curs, conn, characters_list):
+    for character in characters_list:
+        insert_statement = """
+            INSERT INTO charactercreator_character (name, level, exp, hp, strength, intelligence, dexterity, wisdom)
+            VALUES {};
+        """.format(character[1:])
+        curs.execute(insert_statement)
+        conn.commit()
+
+if __name__ == '__main__':
+    SL_CHARACTERS = execute_query(sl_curs, get_characters).fetchall()
+    print(SL_CHARACTERS[:5])
+
+    execute_query(pg_curs, create_character_table)
+
+    populate_pg_character_table(pg_curs, pg_conn, SL_CHARACTERS)
