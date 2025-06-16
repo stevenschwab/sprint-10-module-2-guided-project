@@ -14,3 +14,31 @@ insert_data = """
 """
 
 select_all = """SELECT * FROM test_table;"""
+
+# sqlite queries
+row_count = """
+    SELECT COUNT(*)
+    FROM charactercreator_character;
+"""
+
+get_characters = """
+    SELECT * FROM charactercreator_character;
+"""
+
+get_character_table_info = """
+    PRAGMA table.info(charactercreator_character);
+"""
+
+create_character_table = """
+    CREATE TABLE IF NOT EXISTS charactercreator_character(
+        character_id SERIAL PRIMARY KEY,
+        name VARCHAR(30),
+        level INT,
+        exp INT,
+        hp INT,
+        strength INT,
+        intelligence INT,
+        dexterity INT,
+        wisdom INT
+    );
+"""
