@@ -42,3 +42,7 @@ create_character_table = """
         wisdom INT
     );
 """
+
+drop_character_table = """
+    DROP TABLE IF EXISTS charactercreator_character;
+"""

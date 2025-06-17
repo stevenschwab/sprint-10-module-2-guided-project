@@ -18,7 +18,6 @@ db_name = os.getenv("DB_NAME")
 
 # connecting to PostgreSQL DB
 pg_conn = psycopg2.connect(f"postgres://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}?sslmode=require")
-
 pg_curs = pg_conn.cursor()
 
 # Connecting to SQLite DB
@@ -45,6 +44,7 @@ if __name__ == '__main__':
     SL_CHARACTERS = execute_query(sl_curs, get_characters).fetchall()
     print(SL_CHARACTERS[:5])
 
+    execute_query(pg_curs, drop_character_table)
     execute_query(pg_curs, create_character_table)
 
     populate_pg_character_table(pg_curs, pg_conn, SL_CHARACTERS)
